@@ -46,7 +46,6 @@
 		</div>
 	</div>
 
-
 	<%@ include file="/WEB-INF/fragment/footer.jspf"%>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
