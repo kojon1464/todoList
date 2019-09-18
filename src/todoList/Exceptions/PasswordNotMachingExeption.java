@@ -6,6 +6,6 @@ public class PasswordNotMachingExeption extends Exception {
 
 	@Override
 	public String getMessage() {
-		return "Two wasward wasn't this same";
+		return "Two passswords wasn't this same";
 	}
 }

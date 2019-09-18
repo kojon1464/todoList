@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -28,19 +27,24 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User create(User user) {
+		
 		User resultUser = new User(user);
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
 		int update = template.update(CREATE_STATEMENT, parameterSource, keyHolder);
+		
 		if(update > 0) {
 			resultUser.setId(keyHolder.getKey().longValue());
 			setPrivileges(resultUser);
 		}
+		
 		return resultUser;
 	}
 
 	private void setPrivileges(User user) {
+		
 		final String statement = "INSERT INTO user_role(email) VALUES(:email)";
+		
 		SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
 		template.update(statement, parameterSource);
 	}
@@ -67,12 +71,16 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUserByEmail(String email) {
-		User resultUser = null;
+		
 		final String statement = "SELECT * FROM user WHERE email=:email";
+		
+		User resultUser = null;
 		SqlParameterSource parameterSource = new MapSqlParameterSource("email", email);
 		List<User> users = template.query(statement, parameterSource, new UserRowMapper());
+		
 		if(users.size() > 0 && users.get(0) != null)
 			resultUser = users.get(0);
+		
 		return resultUser;
 	}
 	
@@ -80,13 +88,13 @@ public class UserDAOImpl implements UserDAO {
 
 		@Override
 		public User mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+			
 			User user = new User();
 			user.setId(resultSet.getLong("user_id"));
 			user.setEmail(resultSet.getString("email"));
 			user.setPassword(resultSet.getString("password"));
+			
 			return user;
 		}
-		
 	}
-
 }

@@ -15,15 +15,17 @@ public class UserService {
 		
 		if(!password1.equals(password2))
 			throw new PasswordNotMachingExeption();
-			
+		
 		User user = new User();
 		user.setEmail(email);
 		user.setPassword(encryptPassword(password1));
+
 		UserDAO userDAO = DAOFactory.getDAOFactory().getUserDAO();
 		userDAO.create(user);
 	}
 	
 	private String encryptPassword(String password) {
+		
 		MessageDigest digest = null;
 		try {
 			digest = MessageDigest.getInstance("MD5");

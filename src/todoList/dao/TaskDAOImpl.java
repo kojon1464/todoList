@@ -25,15 +25,19 @@ public class TaskDAOImpl implements TaskDAO {
 
 	@Override
 	public Task create(Task task) {
+		
 		Task resultTask = new Task(task);
 		KeyHolder keyHolder = new GeneratedKeyHolder();
+		
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		parameterSource.addValue("title", task.getTitle());
 		parameterSource.addValue("description", task.getDescription());
 		parameterSource.addValue("user_id", task.getUser().getId());
+		
 		int update = template.update(CREATE_STATEMENT, parameterSource, keyHolder);
 		if(update > 0)
 			resultTask.setId(keyHolder.getKey().longValue());
+		
 		return resultTask;
 	}
 
@@ -44,16 +48,19 @@ public class TaskDAOImpl implements TaskDAO {
 
 	@Override
 	public boolean update(Task updateObject) {
+		
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		parameterSource.addValue("title", updateObject.getTitle());
 		parameterSource.addValue("description", updateObject.getDescription());
 		parameterSource.addValue("user_id", updateObject.getUser().getId());
 		parameterSource.addValue("task_id", updateObject.getId());
+		
 		return template.update(UPDATE_STATEMENT, parameterSource) != 0;
 	}
 
 	@Override
 	public boolean delete(Long primeKey) {
+		
 		SqlParameterSource parmeterSource = new MapSqlParameterSource("task_id", primeKey);
 		return template.update(DELETE_STATEMENT, parmeterSource) != 0;
 	}
@@ -65,20 +72,27 @@ public class TaskDAOImpl implements TaskDAO {
 
 	@Override
 	public Task getTaskById(Long task_id) {
-		Task resultTask = null;
+		
 		final String statement = "SELECT * FROM task LEFT JOIN user ON task.user_id=user.user_id WHERE task.task_id=:task_id";
+		
+		Task resultTask = null;
 		SqlParameterSource parameterSource = new MapSqlParameterSource("task_id", task_id);
 		List<Task> taskList = template.query(statement, parameterSource, new TaskRowMapper());
+		
 		if(taskList.size() > 0 && taskList.get(0) != null)
 			resultTask = taskList.get(0);
+		
 		return resultTask;
 	}
 	
 	@Override
 	public List<Task> getAllTasksByUser(Long user_id) {
+		
 		final String statement = "SELECT * FROM task LEFT JOIN user ON task.user_id=user.user_id WHERE task.user_id=:user_id";
+		
 		SqlParameterSource parameterSource = new MapSqlParameterSource("user_id", user_id);
 		List<Task> taskList = template.query(statement, parameterSource, new TaskRowMapper());
+		
 		return taskList;
 	}
 	
@@ -86,6 +100,7 @@ public class TaskDAOImpl implements TaskDAO {
 
 		@Override
 		public Task mapRow(ResultSet resultSet, int arg1) throws SQLException {
+			
 			Task task = new Task();
 			task.setId(resultSet.getLong("task_id"));
 			task.setTitle(resultSet.getString("title"));
