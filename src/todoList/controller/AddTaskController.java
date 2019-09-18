@@ -23,16 +23,21 @@ public class AddTaskController extends HttpServlet {
 	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
 		request.setCharacterEncoding("UTF-8");
+		
 		String title = request.getParameter("inputTitle");
 		String description = request.getParameter("inputDescription");
+		
 		if(request.getSession().getAttribute("user") == null) {
 			response.sendError(403);
 			return;
 		}
+		
 		User user = (User) request.getSession().getAttribute("user");
 		TaskService service = new TaskService();
 		service.createTask(title, description, user);
+		
 		response.sendRedirect(request.getContextPath() + "/home");
 	}
 }

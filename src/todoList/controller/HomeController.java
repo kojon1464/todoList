@@ -20,14 +20,18 @@ public class HomeController extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
 		request.setCharacterEncoding("UTF-8");
+		
 		if(request.getSession().getAttribute("user") == null) {
 			response.sendError(403);
 			return;
 		}
+		
 		User user = (User) request.getSession().getAttribute("user");
 		TaskService service = new TaskService();
 		List<Task> tasks = service.getAllTasksByUser(user);
+		
 		request.setAttribute("taskList", tasks);
 		request.getRequestDispatcher("WEB-INF/jsp/home.jsp").forward(request, response);
 	}

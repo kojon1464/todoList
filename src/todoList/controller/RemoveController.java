@@ -18,14 +18,18 @@ public class RemoveController extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
 		request.setCharacterEncoding("UTF-8");
+		
 		Long task_id = Long.valueOf(request.getParameter("inputId"));
+		
 		User user = (User) request.getSession().getAttribute("user");
 		if(user == null) {
 			response.sendError(403);
 			return;
 		}
 		Long user_id = user.getId();
+		
 		TaskService service = new TaskService();
 		try {
 			service.deleteTast(task_id, user_id);
@@ -33,6 +37,7 @@ public class RemoveController extends HttpServlet {
 			response.sendError(400);
 			return;
 		}
+		
 		response.sendRedirect(request.getContextPath() + "/home");
 	}
 }

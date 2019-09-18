@@ -18,6 +18,7 @@ public class RegisterController extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		request.getSession().invalidate();
 		request.getRequestDispatcher("WEB-INF/jsp/register.jsp").forward(request, response);
 	}
@@ -26,6 +27,7 @@ public class RegisterController extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		request.setCharacterEncoding("UTF-8");
+		
 		String email = request.getParameter("inputEmail");
 		String password1 = request.getParameter("inputPassword");
 		String password2 = request.getParameter("inputConfirmPassword");
@@ -47,6 +49,7 @@ public class RegisterController extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/jsp/alert.jsp").forward(request, response);
 			return;
 		}
+		
 		request.setAttribute("successMessage", "Registracion process completed");
 		request.setAttribute("returnAdress", "home");
 		request.getRequestDispatcher("WEB-INF/jsp/alert.jsp").forward(request, response);
