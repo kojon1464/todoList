@@ -96,6 +96,4 @@ public class Task {
 	public String toString() {
 		return "Task [id=" + id + ", title=" + title + ", description=" + description + ", user=" + user + "]";
 	}
-	
-	
 }
