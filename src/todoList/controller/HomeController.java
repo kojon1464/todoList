@@ -1,7 +1,6 @@
 package todoList.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -30,6 +29,6 @@ public class HomeController extends HttpServlet {
 		TaskService service = new TaskService();
 		List<Task> tasks = service.getAllTasksByUser(user);
 		request.setAttribute("taskList", tasks);
-		request.getRequestDispatcher("home.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/jsp/home.jsp").forward(request, response);
 	}
 }

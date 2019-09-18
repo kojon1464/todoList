@@ -48,7 +48,7 @@ public class EditController extends HttpServlet {
 			return;
 		}
 		request.setAttribute("task", taskBeforeChanges);
-		request.getRequestDispatcher("editTask.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/jsp/editTask.jsp").forward(request, response);
 	}
 	
 	@Override

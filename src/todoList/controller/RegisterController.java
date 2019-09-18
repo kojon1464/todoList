@@ -19,7 +19,7 @@ public class RegisterController extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
-		request.getRequestDispatcher("register.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/jsp/register.jsp").forward(request, response);
 	}
 	
 	@Override
@@ -35,7 +35,7 @@ public class RegisterController extends HttpServlet {
 		if(service.readUserByEmail(email) != null) {
 			request.setAttribute("errorMessage", "Typed email has been already registered!");
 			request.setAttribute("returnAdress", "register");
-			request.getRequestDispatcher("alert.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/jsp/alert.jsp").forward(request, response);
 			return;
 		}
 		
@@ -44,11 +44,11 @@ public class RegisterController extends HttpServlet {
 		} catch (PasswordNotMachingExeption e) {
 			request.setAttribute("errorMessage", "Typed passwords does not match!</br> Pleas enter maching password in both inputs");
 			request.setAttribute("returnAdress", "register");
-			request.getRequestDispatcher("alert.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/jsp/alert.jsp").forward(request, response);
 			return;
 		}
 		request.setAttribute("successMessage", "Registracion process completed");
 		request.setAttribute("returnAdress", "home");
-		request.getRequestDispatcher("alert.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/jsp/alert.jsp").forward(request, response);
 	}
 }

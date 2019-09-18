@@ -18,7 +18,7 @@ public class AddTaskController extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("addTask.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/jsp/addTask.jsp").forward(request, response);
 	}
 	
 	@Override
