@@ -1,5 +1,5 @@
 # todoList
 My first web application using javaee
 
-Database daigram:<br>
+Database diagram:<br>
 ![](diagram.png)
